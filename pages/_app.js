@@ -1,15 +1,15 @@
-import App from 'next/app'
-import { CounterProvider } from '../components/Counter'
+import App from 'next/app';
+import {TrackingProvider} from '../components/context/Tracking';
 
 class MyApp extends App {
   render() {
-    const { Component, pageProps } = this.props
+    const {Component, pageProps} = this.props;
     return (
-      <CounterProvider>
-        <Component {...pageProps} />
-      </CounterProvider>
-    )
+        <TrackingProvider isGDPR={true}>
+          <Component {...pageProps} />
+        </TrackingProvider>
+    );
   }
 }
 
-export default MyApp
+export default MyApp;

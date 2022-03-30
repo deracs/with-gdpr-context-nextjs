@@ -1,32 +1,17 @@
-import Link from 'next/link'
-import { useCount, useDispatchCount } from '../components/Counter'
+import {useTracking} from '../components/context/Tracking';
+import {doTrack} from '../lib/analytics';
 
-const IndexPage = () => {
-  const count = useCount()
-  const dispatch = useDispatchCount()
-
-  const handleIncrease = (event) =>
-    dispatch({
-      type: 'INCREASE',
-    })
-  const handleDecrease = (event) =>
-    dispatch({
-      type: 'DECREASE',
-    })
-
+const Track = () => {
+  const {canTrack, isGDPR, resetCanTrack} = useTracking();
   return (
-    <>
-      <h1>HOME</h1>
-      <p>Counter: {count}</p>
-      <button onClick={handleIncrease}>Increase</button>
-      <button onClick={handleDecrease}>Decrease</button>
-      <p>
-        <Link href="/about">
-          <a>About</a>
-        </Link>
-      </p>
-    </>
-  )
-}
+      <div>
+        <h1>Context Track</h1>
+        <p>Is this a GDPR site? {isGDPR ? 'yes' : 'no'}</p>
+        <p>Can track? {canTrack ? 'yes' : 'no'}</p>
+        <button onClick={doTrack}>Track</button>
+        <button onClick={() => resetCanTrack()}>Reset</button>
+      </div>
+  );
+};
 
-export default IndexPage
+export default Track;
